@@ -1,0 +1,153 @@
+/* ProgressPage.module.css */
+
+.container {
+  min-height: 100vh;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px 40px;
+}
+
+.header {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+}
+
+.backBtn {
+  background: white;
+  border: 2px solid #EEE;
+  border-radius: 50px;
+  padding: 8px 14px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #888;
+  transition: var(--transition);
+}
+
+.backBtn:hover { border-color: var(--color-blue); color: var(--color-blue); }
+
+.title {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  flex: 1;
+}
+
+/* card do perfil */
+.profileCard {
+  width: 100%;
+  max-width: 480px;
+  background: white;
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 20px;
+}
+
+.avatar { font-size: 2.5rem; }
+
+.profileInfo { display: flex; flex-direction: column; gap: 4px; }
+
+.profileName {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+}
+
+.profileStats { font-size: 0.85rem; color: #888; }
+
+/* seção */
+.section {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: var(--color-dark);
+  margin-bottom: 12px;
+}
+
+/* lista de categorias */
+.catList { display: flex; flex-direction: column; gap: 10px; }
+
+.catCard {
+  background: white;
+  border-radius: var(--radius-card);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.catIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.catDetails { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+
+.catName { font-weight: 700; font-size: 0.95rem; }
+
+.catStats { font-size: 0.8rem; color: #888; }
+
+.progressBar {
+  height: 6px;
+  background: #EEE;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+  min-width: 4px;
+}
+
+/* grid de conquistas */
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.achCard {
+  border-radius: var(--radius-card);
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-card);
+}
+
+.achUnlocked { background: white; }
+
+.achLocked { background: #F5F5F5; opacity: 0.6; }
+
+.achIcon { font-size: 1.8rem; }
+
+.achLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-dark);
+}

@@ -1,0 +1,237 @@
+/* PlayMenuPage.module.css — estilos do menu de categorias */
+
+.container {
+  min-height: 100vh;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px 40px;
+}
+
+/* header */
+.header {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+}
+
+.backBtn {
+  background: white;
+  border: 2px solid #EEE;
+  border-radius: 50px;
+  padding: 8px 14px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #888;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.backBtn:hover {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.avatar {
+  font-size: 1.8rem;
+}
+
+.profileName {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: var(--color-dark);
+}
+
+.starsTotal {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  border-radius: 50px;
+  padding: 6px 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.starsCount {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--color-dark);
+}
+
+/* saudação */
+.greeting {
+  width: 100%;
+  max-width: 480px;
+  margin: 8px 0 20px;
+}
+
+.greeting h2 {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  color: var(--color-dark);
+}
+
+/* lista de categorias */
+.categories {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.catWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* card de categoria */
+.catCard {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: none;
+  border-radius: var(--radius-card);
+  color: white;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.catCard:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.catCard:active {
+  transform: translateY(4px);
+  box-shadow: none !important;
+}
+
+.catIcon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.catInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.catLabel {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.catDesc {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+.catStars {
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* seta de expansão */
+.chevron {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  transition: transform 0.25s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg); /* gira quando expandido */
+}
+
+/* lista de jogos expandida */
+.gamesList {
+  background: white;
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  animation: slideDown 0.2s ease; /* anima a abertura */
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); } /* começa de cima */
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* botão de jogo individual */
+.gameBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: white;
+  border: none;
+  border-bottom: 1px solid #F0F0F0; /* separador suave */
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.gameBtn:last-child {
+  border-bottom: none; /* sem borda no último item */
+}
+
+.gameBtn:hover {
+  background: #F8F8F8;
+}
+
+.gameIcon {
+  font-size: 1.5rem;
+}
+
+.gameLabel {
+  flex: 1;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-dark);
+  text-align: left;
+}
+
+.playArrow {
+  color: #CCC;
+  font-size: 0.8rem;
+}
+
+/* botão de progresso no rodapé */
+.progressBtn {
+  margin-top: 24px;
+  background: white;
+  border: 2px solid var(--color-purple);
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--color-purple);
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+}
+
+.progressBtn:hover {
+  background: var(--color-purple);
+  color: white;
+}

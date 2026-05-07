@@ -1,0 +1,106 @@
+/* global.css — estilos globais e variáveis de tema do EduKids */
+
+/* --- variáveis de cor e tema cartoon --- */
+:root {
+  --color-red:      #FF6B6B;   /* vermelho suave — categoria Alfabeto */
+  --color-yellow:   #FFD93D;   /* amarelo vibrante — categoria Matemática */
+  --color-green:    #6BCB77;   /* verde alegre — categoria Cores/Formas */
+  --color-blue:     #4D96FF;   /* azul vivo — categoria Lógica */
+  --color-purple:   #C77DFF;   /* roxo festivo — conquistas e estrelas */
+  --color-orange:   #FF922B;   /* laranja — botões de ação */
+  --color-bg:       #FFF9F0;   /* fundo creme suave */
+  --color-dark:     #2D2D2D;   /* texto principal */
+  --color-white:    #FFFFFF;
+
+  --font-title:     'Fredoka One', cursive;   /* fonte de títulos — estilo cartoon */
+  --font-body:      'Nunito', sans-serif;     /* fonte de corpo — amigável e legível */
+
+  --radius-card:    20px;      /* arredondamento padrão de cards */
+  --radius-btn:     50px;      /* botões totalmente arredondados */
+  --shadow-card:    0 6px 20px rgba(0,0,0,0.10);   /* sombra suave de cards */
+  --shadow-btn:     0 4px 0px rgba(0,0,0,0.15);    /* sombra de botão (efeito 3D) */
+
+  --transition:     all 0.2s ease;   /* transição padrão para animações */
+}
+
+/* --- reset básico --- */
+*, *::before, *::after {
+  box-sizing: border-box;    /* inclui padding e border no tamanho */
+  margin: 0;                 /* remove margem padrão */
+  padding: 0;                /* remove padding padrão */
+}
+
+/* --- corpo da página --- */
+body {
+  font-family: var(--font-body);     /* fonte padrão */
+  background-color: var(--color-bg); /* fundo creme */
+  color: var(--color-dark);          /* cor de texto */
+  min-height: 100vh;                 /* ocupa tela toda */
+  overflow-x: hidden;                /* sem scroll horizontal */
+  -webkit-tap-highlight-color: transparent; /* remove highlight azul no Android */
+  user-select: none;                 /* impede seleção de texto durante jogos */
+}
+
+/* --- container principal da app --- */
+#root {
+  min-height: 100vh;          /* altura total da tela */
+  display: flex;              /* layout flex */
+  flex-direction: column;     /* empilha verticalmente */
+}
+
+/* --- scrollbar customizada --- */
+::-webkit-scrollbar {
+  width: 6px;                 /* largura da barra */
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg); /* fundo da trilha */
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-blue); /* cor do indicador */
+  border-radius: 10px;           /* arredondado */
+}
+
+/* --- classe utilitária para animação de entrada --- */
+.fade-in {
+  animation: fadeIn 0.4s ease forwards; /* anima entrada suave */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); } /* começa invisível e abaixo */
+  to   { opacity: 1; transform: translateY(0);    } /* termina visível na posição */
+}
+
+/* --- animação de bounce para feedback de acerto --- */
+.bounce {
+  animation: bounce 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1);    } /* tamanho normal */
+  30%      { transform: scale(1.3);  } /* aumenta */
+  60%      { transform: scale(0.9);  } /* diminui levemente */
+}
+
+/* --- animação de shake para feedback de erro --- */
+.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0);    }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px);  }
+  60%      { transform: translateX(-5px); }
+  80%      { transform: translateX(5px);  }
+}
+
+/* --- estrela pulsante (conquistas) --- */
+@keyframes starPop {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  60%  { transform: scale(1.3) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+}
+
+.star-pop {
+  animation: starPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}

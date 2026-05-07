@@ -1,0 +1,191 @@
+/* ParentPage.module.css */
+
+.container {
+  min-height: 100vh;
+  background: #1A1A2E; /* fundo escuro — área adulta */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 16px 40px;
+  color: white;
+}
+
+.backBtn {
+  align-self: flex-start;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50px;
+  padding: 8px 16px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.backBtn:hover { background: rgba(255,255,255,0.2); }
+
+/* --- tela de PIN --- */
+.pinCard {
+  background: #16213E;
+  border-radius: 24px;
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.pinIcon { font-size: 3rem; }
+
+.pinTitle {
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  color: white;
+}
+
+.pinSubtitle { font-size: 0.9rem; color: #AAA; }
+
+.pinHint { font-size: 0.75rem; color: #666; }
+
+/* indicadores de dígitos */
+.pinDots { display: flex; gap: 14px; margin: 8px 0; }
+
+.pinDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  background: transparent;
+  transition: all 0.2s;
+}
+
+.pinDotFilled { background: var(--color-blue); border-color: var(--color-blue); }
+
+.pinDotError { border-color: var(--color-red); background: var(--color-red); }
+
+/* teclado numérico */
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.numBtn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 16px;
+  color: white;
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.numBtn:hover { background: rgba(255,255,255,0.18); }
+
+.numBtnBack { font-size: 1rem; }
+
+.confirmBtn {
+  background: var(--color-blue);
+  border: none;
+  border-radius: 50px;
+  padding: 14px 32px;
+  color: white;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #2563B0;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.confirmBtn:disabled { background: #555; box-shadow: 0 4px 0 #333; cursor: not-allowed; }
+
+.errorMsg { color: var(--color-red); font-size: 0.85rem; font-weight: 700; }
+
+/* --- área desbloqueada --- */
+.header {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  flex: 1;
+}
+
+.reportsList {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reportCard {
+  background: #16213E;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.reportHeader { display: flex; align-items: center; gap: 12px; }
+
+.reportAvatar { font-size: 2.2rem; }
+
+.reportName { font-family: var(--font-title); font-size: 1.1rem; }
+
+.reportAge { font-size: 0.8rem; color: #888; }
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.statBox {
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.statValue { font-weight: 700; font-size: 0.95rem; }
+
+.statLabel { font-size: 0.7rem; color: #888; text-align: center; }
+
+.catBreakdown { display: flex; flex-direction: column; gap: 6px; }
+
+.catRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+.catRowIcon { font-size: 1.1rem; }
+
+.catRowLabel { flex: 1; font-size: 0.85rem; font-weight: 700; }
+
+.catRowStats { font-size: 0.8rem; color: #888; }
+
+.empty { color: #666; margin-top: 40px; }

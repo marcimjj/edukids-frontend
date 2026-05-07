@@ -1,0 +1,255 @@
+/* SharedGame.module.css — estilos compartilhados por todos os jogos */
+
+/* área principal do jogo */
+.gameArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* texto de instrução para a criança */
+.instruction {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: var(--color-dark);
+  text-align: center;
+}
+
+/* linha de sequência de emojis */
+.sequence {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: white;
+  padding: 16px 20px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  width: 100%;
+}
+
+/* item individual da sequência */
+.seqItem {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+/* lacuna com interrogação */
+.seqBlank {
+  background: #F0F0F0;
+  border-radius: 10px;
+  padding: 0 8px;
+  color: #AAA;
+  font-size: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* grid de opções de resposta (2x2) */
+.optionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* duas colunas */
+  gap: 12px;
+  width: 100%;
+}
+
+/* botão de opção */
+.optionBtn {
+  background: white;
+  border: 3px solid #EEE;
+  border-radius: var(--radius-card);
+  padding: 20px;
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.optionBtn:hover {
+  border-color: var(--color-blue);
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.optionBtn:active {
+  transform: scale(0.95); /* pressiona ao clicar */
+}
+
+/* ---- estilos para jogos de texto (alfabeto) ---- */
+
+/* exibição da palavra com letras faltando */
+.wordDisplay {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* letra individual da palavra */
+.letterBox {
+  width: 48px;
+  height: 56px;
+  border-radius: 12px;
+  border: 3px solid #DDD;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  color: var(--color-dark);
+  box-shadow: var(--shadow-card);
+}
+
+/* letra faltando (lacuna) */
+.letterBlank {
+  border-color: var(--color-red);
+  background: #FFF5F5;
+  color: var(--color-red);
+}
+
+/* grid de letras para escolher (alfabeto) */
+.lettersGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.letterBtn {
+  background: white;
+  border: 3px solid #EEE;
+  border-radius: 14px;
+  padding: 14px 8px;
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+}
+
+.letterBtn:hover {
+  border-color: var(--color-red);
+  background: #FFF5F5;
+  transform: scale(1.08);
+}
+
+/* ---- estilos para jogos de números ---- */
+
+/* caixa de número grande */
+.numberBox {
+  background: white;
+  border-radius: var(--radius-card);
+  padding: 24px 36px;
+  font-family: var(--font-title);
+  font-size: 5rem;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  min-width: 140px;
+}
+
+/* linha de comparação (ex: dois números lado a lado) */
+.compareRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* símbolo de operação (>, <, +, =) */
+.mathSymbol {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  color: #888;
+}
+
+/* grid de emojis para contar */
+.emojiGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  background: white;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  max-width: 280px;
+}
+
+.countEmoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+/* opções numéricas (2x2) */
+.numbersGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.numberBtn {
+  background: white;
+  border: 3px solid #EEE;
+  border-radius: var(--radius-card);
+  padding: 20px;
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+}
+
+.numberBtn:hover {
+  border-color: var(--color-yellow);
+  transform: scale(1.05);
+}
+
+/* ---- estilos para jogos de cores e formas ---- */
+
+/* amostra de cor/forma grande */
+.colorSample {
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* grid de cores para escolher */
+.colorsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.colorBtn {
+  height: 80px;
+  border-radius: var(--radius-card);
+  border: 4px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+}
+
+.colorBtn:hover {
+  border-color: white;
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* label de cor abaixo da amostra */
+.colorLabel {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+}

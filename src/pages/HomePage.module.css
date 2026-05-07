@@ -1,0 +1,312 @@
+/* HomePage.module.css — estilos da tela de seleção de perfil */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #FFF9F0 0%, #E8F4FF 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 40px;
+}
+
+/* cabeçalho */
+.header {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
+}
+
+.logo {
+  font-size: 2rem; /* emoji do logo */
+}
+
+.logoText {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  color: var(--color-blue);
+  flex: 1; /* empurra o botão dos pais para a direita */
+}
+
+.parentBtn {
+  background: white;
+  border: 2px solid #DDD;
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #666;
+  transition: var(--transition);
+}
+
+.parentBtn:hover {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+
+/* título da seleção */
+.question {
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  color: var(--color-dark);
+  margin: 16px 0 28px;
+  text-align: center;
+}
+
+/* grid de perfis */
+.profilesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  gap: 16px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* card de perfil — posição relativa para o botão delete */
+.profileCard {
+  position: relative;
+}
+
+/* botão de deletar — canto superior direito */
+.deleteBtn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FF4444; /* vermelho */
+  color: white;
+  border: none;
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  opacity: 0;          /* invisível por padrão */
+}
+
+/* mostra o delete ao passar o mouse no card */
+.profileCard:hover .deleteBtn {
+  opacity: 1;
+}
+
+/* botão principal do perfil */
+.profileBtn {
+  width: 100%;
+  background: white;
+  border: 3px solid transparent;
+  border-radius: var(--radius-card);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+}
+
+.profileBtn:hover {
+  border-color: var(--color-blue);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.profileAvatar {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.profileName {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: var(--color-dark);
+}
+
+.profileAge {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.starsRow {
+  font-size: 0.75rem;
+  min-height: 18px; /* reserva espaço mesmo sem estrelas */
+}
+
+/* botão de adicionar perfil */
+.addBtn {
+  background: white;
+  border: 3px dashed #CCC; /* tracejado */
+  border-radius: var(--radius-card);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #AAA;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+.addBtn:hover {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+  transform: translateY(-2px);
+}
+
+.addIcon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+/* modal overlay */
+.modalOverlay {
+  position: fixed;
+  inset: 0;                          /* cobre a tela toda */
+  background: rgba(0,0,0,0.5);       /* fundo escuro semitransparente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+/* caixa do modal */
+.modal {
+  background: white;
+  border-radius: 24px;
+  padding: 28px 24px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.modalTitle {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--color-dark);
+}
+
+/* campo de entrada */
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 3px solid #EEE;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  outline: none;
+  transition: var(--transition);
+}
+
+.input:focus {
+  border-color: var(--color-blue);
+}
+
+.label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* linha de avatares pequenos */
+.avatarRow {
+  display: flex;
+  gap: 8px;
+}
+
+.avatarBtn {
+  flex: 1;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: #F5F5F5;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.avatarSelected {
+  border-color: var(--color-orange);
+  background: #FFF3E0;
+  transform: scale(1.1);
+}
+
+/* linha de idades */
+.ageRow {
+  display: flex;
+  gap: 8px;
+}
+
+.ageBtn {
+  flex: 1;
+  padding: 8px 4px;
+  border-radius: 50px;
+  border: 2px solid #EEE;
+  background: white;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.ageSelected {
+  border-color: var(--color-blue);
+  background: var(--color-blue);
+  color: white;
+}
+
+/* linha de botões do modal */
+.modalActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btnSecondary {
+  flex: 1;
+  padding: 12px;
+  border-radius: 50px;
+  border: 2px solid #DDD;
+  background: white;
+  font-family: var(--font-body);
+  font-weight: 700;
+  cursor: pointer;
+  color: #666;
+  transition: var(--transition);
+}
+
+.btnPrimary {
+  flex: 1.5;
+  padding: 12px;
+  border-radius: 50px;
+  border: none;
+  background: var(--color-orange);
+  color: white;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #C96F1A;
+  transition: var(--transition);
+}
+
+.btnPrimary:disabled {
+  background: #CCC;
+  box-shadow: 0 4px 0 #AAA;
+  cursor: not-allowed;
+}

@@ -1,0 +1,185 @@
+/* OnboardingPage.module.css — estilos da tela de onboarding */
+
+/* container principal — tela cheia com gradiente suave */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FFF9F0 0%, #FFE8D6 100%); /* gradiente quente */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 20px;
+}
+
+/* indicador de progresso (bolinhas) */
+.dots {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+/* bolinha inativa */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #DDD; /* cinza claro */
+  transition: all 0.3s ease;
+}
+
+/* bolinha ativa */
+.dotActive {
+  background: var(--color-orange); /* laranja vibrante */
+  width: 28px;                     /* alarga quando ativo */
+  border-radius: 5px;
+}
+
+/* wrapper de cada passo */
+.stepWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 0.35s ease; /* entrada suave */
+}
+
+/* emoji grande de destaque */
+.bigEmoji {
+  font-size: 72px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); /* sombra suave */
+}
+
+/* título principal */
+.title {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  color: var(--color-dark);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* subtítulo */
+.subtitle {
+  font-size: 1.1rem;
+  color: #888;
+  text-align: center;
+}
+
+/* campo de texto para nome */
+.input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 3px solid var(--color-blue);  /* borda azul */
+  border-radius: var(--radius-btn);     /* totalmente arredondado */
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  background: white;
+  outline: none;
+  color: var(--color-dark);
+  transition: var(--transition);
+}
+
+.input:focus {
+  border-color: var(--color-orange);   /* laranja ao focar */
+  box-shadow: 0 0 0 4px rgba(255,146,43,0.2); /* halo suave */
+}
+
+/* grid de avatares */
+.avatarGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 colunas */
+  gap: 12px;
+  width: 100%;
+}
+
+/* botão de avatar */
+.avatarBtn {
+  aspect-ratio: 1;                       /* quadrado */
+  border-radius: 16px;
+  border: 3px solid transparent;
+  background: white;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarBtn:hover {
+  transform: scale(1.1); /* aumenta levemente ao passar o mouse */
+}
+
+/* avatar selecionado — borda colorida */
+.avatarSelected {
+  border-color: var(--color-orange); /* borda laranja */
+  background: #FFF3E0;               /* fundo levemente laranja */
+  transform: scale(1.15);            /* levemente maior */
+}
+
+/* linha de seleção de idade */
+.ageRow {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* botão de idade */
+.ageBtn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;             /* círculo */
+  border: 3px solid #DDD;
+  background: white;
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+}
+
+/* idade selecionada */
+.ageSelected {
+  border-color: var(--color-blue);
+  background: var(--color-blue);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* botão principal de ação */
+.btnPrimary {
+  background: var(--color-orange);   /* laranja vibrante */
+  color: white;
+  border: none;
+  border-radius: var(--radius-btn);  /* totalmente arredondado */
+  padding: 16px 40px;
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #C96F1A;      /* sombra inferior — efeito 3D */
+  transition: var(--transition);
+  margin-top: 8px;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  transform: translateY(-2px);       /* sobe levemente */
+  box-shadow: 0 8px 0 #C96F1A;      /* sombra maior */
+}
+
+.btnPrimary:active:not(:disabled) {
+  transform: translateY(3px);        /* pressiona para baixo */
+  box-shadow: 0 2px 0 #C96F1A;
+}
+
+.btnPrimary:disabled {
+  background: #CCC;                  /* cinza quando desabilitado */
+  box-shadow: 0 4px 0 #AAA;
+  cursor: not-allowed;
+}
