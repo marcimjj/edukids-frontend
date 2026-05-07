@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // cria instância do axios com configuração base
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api', // URL do backend
+  baseURL: 'https://edukids-backend-production.up.railway.app/api',
   timeout: 10000,    // timeout de 10 segundos
   headers: {
     'Content-Type': 'application/json', // formato de dados
