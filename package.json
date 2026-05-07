@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "App educativo infantil - EduKids",
   "scripts": {
-   "dev": "vite",
-"build": "vite build",
-"preview": "vite preview",
-"start": "node server.js",
+  "dev": "vite",
+  "build": "vite build",
+  "start": "node server.js",
     "cap:add": "cap add android",
     "cap:sync": "cap sync",
     "cap:open": "cap open android"
