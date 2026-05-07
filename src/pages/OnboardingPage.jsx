@@ -1,38 +1,42 @@
 // pages/OnboardingPage.jsx — tela de boas-vindas e criação do primeiro perfil
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile, AVATARS } from '../hooks/useProfile';
 import { useSound } from '../hooks/useSound';
 import styles from './OnboardingPage.module.css';
 
 function OnboardingPage() {
-  const navigate = useNavigate();         // hook de navegação
-  const { createProfile } = useProfile(); // função para criar perfil
-  const { playClick } = useSound();       // som de clique
+  const navigate = useNavigate();
+  const { createProfile, profiles } = useProfile();
+  const { playClick } = useSound();
 
-  // etapa atual do onboarding (0 = boas-vindas, 1 = nome, 2 = avatar, 3 = idade)
-  const [step, setStep] = useState(0);
-  const [name,   setName]   = useState('');       // nome da criança
-  const [avatar, setAvatar] = useState(AVATARS[0]); // avatar selecionado
-  const [age,    setAge]    = useState(4);         // idade (4 ou 5 anos)
+  const [step,     setStep]     = useState(0);
+  const [name,     setName]     = useState('');
+  const [avatar,   setAvatar]   = useState(AVATARS[0]);
+  const [age,      setAge]      = useState(4);
+  const [finished, setFinished] = useState(false);
 
-  // avança para o próximo passo
+  // navega para /play quando o perfil for criado no estado
+  useEffect(() => {
+    if (finished && profiles.length > 0) {
+      navigate('/play');
+    }
+  }, [finished, profiles.length, navigate]);
+
   const nextStep = () => {
-    playClick(); // feedback sonoro
+    playClick();
     setStep(s => s + 1);
   };
 
-  // finaliza o onboarding e cria o perfil
   const finish = () => {
     playClick();
-    createProfile(name.trim() || 'Criança', avatar, age); // cria o perfil
-    navigate('/play'); // vai para o menu de jogos
+    createProfile(name.trim() || 'Criança', avatar, age);
+    setFinished(true); // useEffect vai detectar e navegar
   };
 
-  // renderiza o passo atual
   const renderStep = () => {
     switch (step) {
-      case 0: // tela de boas-vindas
+      case 0:
         return (
           <div className={styles.stepWrap}>
             <div className={styles.bigEmoji}>🎓</div>
@@ -43,8 +47,7 @@ function OnboardingPage() {
             </button>
           </div>
         );
-
-      case 1: // tela de nome
+      case 1:
         return (
           <div className={styles.stepWrap}>
             <div className={styles.bigEmoji}>✏️</div>
@@ -54,21 +57,20 @@ function OnboardingPage() {
               type="text"
               placeholder="Digite seu nome..."
               value={name}
-              onChange={e => setName(e.target.value)} // atualiza estado do nome
-              maxLength={20}  // limite de caracteres
-              autoFocus       // foco automático no campo
+              onChange={e => setName(e.target.value)}
+              maxLength={20}
+              autoFocus
             />
             <button
               className={styles.btnPrimary}
               onClick={nextStep}
-              disabled={!name.trim()} // desabilita se vazio
+              disabled={!name.trim()}
             >
               Próximo ➡️
             </button>
           </div>
         );
-
-      case 2: // tela de escolha de avatar
+      case 2:
         return (
           <div className={styles.stepWrap}>
             <div className={styles.bigEmoji}>{avatar}</div>
@@ -78,7 +80,7 @@ function OnboardingPage() {
                 <button
                   key={a}
                   className={`${styles.avatarBtn} ${avatar === a ? styles.avatarSelected : ''}`}
-                  onClick={() => { playClick(); setAvatar(a); }} // seleciona avatar
+                  onClick={() => { playClick(); setAvatar(a); }}
                 >
                   {a}
                 </button>
@@ -89,8 +91,7 @@ function OnboardingPage() {
             </button>
           </div>
         );
-
-      case 3: // tela de idade
+      case 3:
         return (
           <div className={styles.stepWrap}>
             <div className={styles.bigEmoji}>🎂</div>
@@ -100,7 +101,7 @@ function OnboardingPage() {
                 <button
                   key={a}
                   className={`${styles.ageBtn} ${age === a ? styles.ageSelected : ''}`}
-                  onClick={() => { playClick(); setAge(a); }} // seleciona idade
+                  onClick={() => { playClick(); setAge(a); }}
                 >
                   {a}
                 </button>
@@ -111,7 +112,6 @@ function OnboardingPage() {
             </button>
           </div>
         );
-
       default:
         return null;
     }
@@ -119,7 +119,6 @@ function OnboardingPage() {
 
   return (
     <div className={styles.container}>
-      {/* indicador de progresso dos passos */}
       <div className={styles.dots}>
         {[0,1,2,3].map(i => (
           <div
@@ -128,11 +127,9 @@ function OnboardingPage() {
           />
         ))}
       </div>
-
-      {/* conteúdo do passo atual */}
       {renderStep()}
     </div>
   );
 }
 
-export default OnboardingPage; // exporta a página
+export default OnboardingPage;
