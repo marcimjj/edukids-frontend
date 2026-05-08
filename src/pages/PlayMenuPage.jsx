@@ -162,12 +162,12 @@ function PlayMenuPage() {
       </div>
 
       {/* botão de ver progresso */}
-      <button
-        className={styles.progressBtn}
-        onClick={() => { playClick(); navigate('/progress'); }}
-      >
-        🏆 Ver conquistas
-      </button>
+     <button
+  className={styles.coloringBtn}
+  onClick={() => { playClick(); navigate('/coloring'); }}
+>
+  🎨 Colorir
+</button>
     </div>
   );
 }
