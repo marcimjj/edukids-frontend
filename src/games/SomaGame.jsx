@@ -30,7 +30,8 @@ function SomaGame({ categoria, onEnd, onBack }) {
   const [rounds] = useState(() => generateRounds(TOTAL));
 
   return (
-    <GameShell title="Soma com Frutas ➕" categoria={categoria} totalRounds={TOTAL} onEnd={onEnd} onBack={onBack}>
+    <GameShell title="Soma com Frutas ➕"
+      instruction="Some as frutas dos dois grupos e escolha o total!" categoria={categoria} totalRounds={TOTAL} onEnd={onEnd} onBack={onBack}>
       {({ round, onCorrect, onWrong }) => {
         const r = rounds[round - 1];
 

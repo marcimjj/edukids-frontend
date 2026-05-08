@@ -20,7 +20,8 @@ function MaiorGame({ categoria, onEnd, onBack }) {
   const [rounds] = useState(() => generateRounds(TOTAL));
 
   return (
-    <GameShell title="Qual é Maior? ⚖️" categoria={categoria} totalRounds={TOTAL} onEnd={onEnd} onBack={onBack}>
+    <GameShell title="Qual é Maior? ⚖️"
+      instruction="Compare os números e escolha o maior!" categoria={categoria} totalRounds={TOTAL} onEnd={onEnd} onBack={onBack}>
       {({ round, onCorrect, onWrong }) => {
         const r = rounds[round - 1];
         const shuffled = Math.random() > 0.5 ? [r.a, r.b] : [r.b, r.a]; // posição aleatória

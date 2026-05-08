@@ -23,7 +23,8 @@ function PalavraGame({ categoria, onEnd, onBack }) {
   const [rounds] = useState(() => sample(WORDS, TOTAL));
 
   return (
-    <GameShell title="Complete a Palavra ✏️" categoria={categoria} totalRounds={TOTAL} onEnd={onEnd} onBack={onBack}>
+    <GameShell title="Complete a Palavra ✏️"
+      instruction="Qual letra está faltando na palavra?" categoria={categoria} totalRounds={TOTAL} onEnd={onEnd} onBack={onBack}>
       {({ round, onCorrect, onWrong }) => {
         const r = rounds[round - 1];
         const letters = r.word.split('');        // divide a palavra em letras
