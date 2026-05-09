@@ -1,0 +1,241 @@
+/* ColoringPage.module.css — tela de colorir */
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #FFF9F0;
+  align-items: center;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--color-purple);
+  color: white;
+}
+
+.backBtn {
+  background: rgba(255,255,255,0.25);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  flex: 1;
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+}
+
+.saveBtn {
+  background: rgba(255,255,255,0.25);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.saveBtn:hover:not(:disabled) { background: rgba(255,255,255,0.4); }
+.saveBtn:disabled { opacity: 0.5; }
+
+/* área do canvas */
+.canvasWrap {
+  position: relative;
+  margin: 16px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  touch-action: none; /* evita scroll ao desenhar no mobile */
+}
+
+.canvas {
+  display: block;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* overlay com as linhas — fica por cima, não recebe cliques */
+.canvasOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* deixa os cliques passarem para o canvas de baixo */
+}
+
+/* paleta de cores */
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 8px 16px;
+  max-width: 340px;
+}
+
+.colorBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.colorBtn:hover { transform: scale(1.2); }
+
+.colorActive {
+  border-color: var(--color-dark);
+  transform: scale(1.25);
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--color-dark);
+}
+
+/* controles */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+}
+
+.brushSizes {
+  display: flex;
+  gap: 6px;
+}
+
+.brushBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #DDD;
+  background: white;
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.brushActive {
+  border-color: var(--color-purple);
+  background: var(--color-purple);
+  color: white;
+}
+
+.toolBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #DDD;
+  background: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolBtn:hover { border-color: var(--color-purple); }
+
+.toolActive {
+  border-color: var(--color-purple);
+  background: rgba(167,139,250,0.15);
+}
+
+/* preview da cor ativa */
+.activeColor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted, #888);
+  padding: 4px 16px;
+}
+
+.activeColorDot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+/* loading */
+.loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 3rem;
+  color: #888;
+}
+
+.loading p { font-size: 1rem; }
+
+/* modal de salvar */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.saveModal {
+  background: white;
+  border-radius: 24px;
+  padding: 32px 28px;
+  max-width: 320px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.saveEmoji { font-size: 3.5rem; }
+
+.saveModal h3 {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  color: var(--color-dark, #2D2D2D);
+}
+
+.saveModal p { font-size: 0.9rem; color: #888; }
+
+.btnPrimary {
+  background: var(--color-purple);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: var(--transition);
+}
+
+.btnPrimary:hover { opacity: 0.9; transform: translateY(-1px); }
