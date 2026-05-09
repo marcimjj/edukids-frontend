@@ -1,4 +1,4 @@
-/* ColoringPage.module.css — tela de colorir */
+/* ColoringPage.module.css — tela de colorir com canvas único */
 
 .container {
   min-height: 100vh;
@@ -62,22 +62,33 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-  touch-action: none; /* evita scroll ao desenhar no mobile */
+  touch-action: none;
+  background: white;
 }
 
+/* canvas principal — recebe todos os eventos */
 .canvas {
   display: block;
   cursor: crosshair;
   touch-action: none;
+  max-width: 100%;
 }
 
-/* overlay com as linhas — fica por cima, não recebe cliques */
-.canvasOverlay {
+/* overlay de loading */
+.loadingOverlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none; /* deixa os cliques passarem para o canvas de baixo */
+  inset: 0;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 3rem;
+  color: #AAA;
 }
+
+.loadingOverlay p { font-size: 1rem; }
 
 /* paleta de cores */
 .palette {
@@ -115,10 +126,7 @@
   padding: 8px 16px;
 }
 
-.brushSizes {
-  display: flex;
-  gap: 6px;
-}
+.brushSizes { display: flex; gap: 6px; }
 
 .brushBtn {
   width: 36px;
@@ -165,7 +173,7 @@
   align-items: center;
   gap: 8px;
   font-size: 0.8rem;
-  color: var(--text-muted, #888);
+  color: #888;
   padding: 4px 16px;
 }
 
@@ -220,7 +228,7 @@
 .saveModal h3 {
   font-family: var(--font-title);
   font-size: 1.4rem;
-  color: var(--color-dark, #2D2D2D);
+  color: #2D2D2D;
 }
 
 .saveModal p { font-size: 0.9rem; color: #888; }

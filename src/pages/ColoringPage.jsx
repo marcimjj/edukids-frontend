@@ -1,4 +1,4 @@
-// pages/ColoringPage.jsx — módulo de colorir com canvas + paleta de cores
+// pages/ColoringPage.jsx — módulo de colorir com canvas funcional
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useProfile } from '../hooks/useProfile';
@@ -7,7 +7,7 @@ import { useVoice }   from '../hooks/useVoice';
 import { COLORING_DRAWINGS } from '../data/coloringDrawings';
 import styles from './ColoringPage.module.css';
 
-// paleta de cores estilo Bobbie Goods — pastéis vibrantes
+// paleta de cores
 const PALETTE = [
   '#FF6B6B','#FF922B','#FFD93D','#6BCB77',
   '#4D96FF','#A78BFA','#FF6ECD','#F8C8A0',
@@ -27,61 +27,81 @@ function ColoringPage() {
   const { playCorrect, playClick }  = useSound();
   const { speak }                   = useVoice();
 
-  const canvasRef   = useRef(null);  // canvas de pintura
-  const overlayRef  = useRef(null);  // canvas com linhas do desenho
-  const isDrawing   = useRef(false);
-  const lastPos     = useRef(null);
+  const canvasRef  = useRef(null);
+  const isDrawing  = useRef(false);
+  const lastPos    = useRef(null);
+  const imgRef     = useRef(null); // guarda a imagem carregada para redesenhar
 
   const [color,     setColor]     = useState('#FF6B6B');
   const [brushSize, setBrushSize] = useState(16);
   const [isEraser,  setIsEraser]  = useState(false);
   const [saved,     setSaved]     = useState(false);
   const [showSave,  setShowSave]  = useState(false);
+  const [loaded,    setLoaded]    = useState(false);
 
-  // encontra o desenho pelo ID
   const drawing = COLORING_DRAWINGS.find(d => d.id === id);
 
-  // fala boas-vindas ao abrir o desenho
+  // voz de boas-vindas
   useEffect(() => {
     if (drawing) {
       setTimeout(() => speak(`Vamos colorir ${drawing.name}! Escolha uma cor e divirta-se!`), 600);
     }
-  }, [drawing]);
+  }, []);
 
-  // carrega a imagem no canvas overlay
+  // carrega a imagem e inicializa o canvas
   useEffect(() => {
     if (!drawing?.imageUrl) return;
-    const canvas  = canvasRef.current;
-    const overlay = overlayRef.current;
-    if (!canvas || !overlay) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
+    // define tamanho do canvas
+    const size = Math.min(window.innerWidth - 32, 480);
+    canvas.width  = size;
+    canvas.height = size;
+
+    const ctx = canvas.getContext('2d');
+
+    // fundo branco
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, size, size);
+
+    // carrega a imagem
     const img = new Image();
     img.crossOrigin = 'anonymous';
-
     img.onload = () => {
-      const size = Math.min(window.innerWidth - 32, 500);
-      canvas.width  = overlay.width  = size;
-      canvas.height = overlay.height = size;
-
-      // fundo branco no canvas de coloração
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, size, size);
-
-      // linhas do desenho no overlay
-      const octx = overlay.getContext('2d');
-      octx.drawImage(img, 0, 0, size, size);
+      imgRef.current = img; // guarda referência da imagem
+      setLoaded(true);
     };
-
+    img.onerror = () => setLoaded(true); // mesmo com erro, libera a tela
     img.src = drawing.imageUrl;
   }, [drawing]);
 
-  // obtém posição do toque/mouse relativa ao canvas
-  const getPos = useCallback((e, canvas) => {
+  // redesenha as linhas da imagem por cima da coloração
+  const redrawLines = useCallback(() => {
+    if (!imgRef.current) return;
+    const canvas = canvasRef.current;
+    const ctx    = canvas.getContext('2d');
+
+    // salva o estado atual do canvas (coloração)
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    // desenha a imagem em modo "multiply" para preservar a coloração
+    ctx.save();
+    ctx.globalCompositeOperation = 'multiply'; // mescla as linhas com as cores
+    ctx.drawImage(imgRef.current, 0, 0, canvas.width, canvas.height);
+    ctx.restore();
+  }, []);
+
+  // obtém posição correta do mouse/toque relativa ao canvas
+  const getPos = useCallback((e) => {
+    const canvas = canvasRef.current;
     const rect   = canvas.getBoundingClientRect();
+
+    // fator de escala (canvas pode ter tamanho diferente do elemento CSS)
     const scaleX = canvas.width  / rect.width;
     const scaleY = canvas.height / rect.height;
-    if (e.touches) {
+
+    if (e.touches && e.touches.length > 0) {
       return {
         x: (e.touches[0].clientX - rect.left) * scaleX,
         y: (e.touches[0].clientY - rect.top)  * scaleY,
@@ -93,64 +113,94 @@ function ColoringPage() {
     };
   }, []);
 
-  const startDraw = useCallback((e) => {
-    e.preventDefault();
-    isDrawing.current = true;
-    const canvas = canvasRef.current;
-    const ctx    = canvas.getContext('2d');
-    const pos    = getPos(e, canvas);
-    lastPos.current = pos;
+  // pinta um ponto
+  const paintPoint = useCallback((ctx, x, y) => {
+    const size = isEraser ? brushSize * 2 : brushSize;
+    ctx.save();
+    ctx.globalCompositeOperation = isEraser ? 'destination-out' : 'source-over';
     ctx.beginPath();
-    ctx.arc(pos.x, pos.y, (isEraser ? brushSize * 1.5 : brushSize) / 2, 0, Math.PI * 2);
-    ctx.fillStyle = isEraser ? '#FFFFFF' : color;
+    ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+    ctx.fillStyle = isEraser ? 'rgba(0,0,0,1)' : color;
     ctx.fill();
-  }, [color, brushSize, isEraser, getPos]);
+    ctx.restore();
+    // redesenha as linhas por cima
+    if (imgRef.current) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.drawImage(imgRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+      ctx.restore();
+    }
+  }, [color, brushSize, isEraser]);
 
-  const draw = useCallback((e) => {
-    if (!isDrawing.current) return;
-    e.preventDefault();
-    const canvas = canvasRef.current;
-    const ctx    = canvas.getContext('2d');
-    const pos    = getPos(e, canvas);
-    const last   = lastPos.current;
+  // pinta uma linha entre dois pontos
+  const paintLine = useCallback((ctx, x1, y1, x2, y2) => {
+    ctx.save();
+    ctx.globalCompositeOperation = isEraser ? 'destination-out' : 'source-over';
     ctx.beginPath();
-    ctx.moveTo(last.x, last.y);
-    ctx.lineTo(pos.x, pos.y);
-    ctx.strokeStyle = isEraser ? '#FFFFFF' : color;
-    ctx.lineWidth   = isEraser ? brushSize * 1.5 : brushSize;
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.strokeStyle = isEraser ? 'rgba(0,0,0,1)' : color;
+    ctx.lineWidth   = isEraser ? brushSize * 2 : brushSize;
     ctx.lineCap     = 'round';
     ctx.lineJoin    = 'round';
     ctx.stroke();
-    lastPos.current = pos;
-  }, [color, brushSize, isEraser, getPos]);
+    ctx.restore();
+    // redesenha linhas por cima
+    if (imgRef.current) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.drawImage(imgRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+      ctx.restore();
+    }
+  }, [color, brushSize, isEraser]);
 
-  const endDraw = useCallback(() => {
+  const handleStart = useCallback((e) => {
+    e.preventDefault();
+    isDrawing.current = true;
+    const pos = getPos(e);
+    lastPos.current = pos;
+    const canvas = canvasRef.current;
+    const ctx    = canvas.getContext('2d');
+    paintPoint(ctx, pos.x, pos.y);
+  }, [getPos, paintPoint]);
+
+  const handleMove = useCallback((e) => {
+    if (!isDrawing.current) return;
+    e.preventDefault();
+    const pos  = getPos(e);
+    const last = lastPos.current;
+    const canvas = canvasRef.current;
+    const ctx    = canvas.getContext('2d');
+    paintLine(ctx, last.x, last.y, pos.x, pos.y);
+    lastPos.current = pos;
+  }, [getPos, paintLine]);
+
+  const handleEnd = useCallback(() => {
     isDrawing.current = false;
     lastPos.current   = null;
   }, []);
 
+  // limpa o canvas
   const clearCanvas = () => {
     playClick();
     const canvas = canvasRef.current;
     const ctx    = canvas.getContext('2d');
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // redesenha as linhas
+    if (imgRef.current) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.drawImage(imgRef.current, 0, 0, canvas.width, canvas.height);
+      ctx.restore();
+    }
   };
 
+  // salva a obra
   const saveArtwork = () => {
     playCorrect();
     const canvas  = canvasRef.current;
-    const overlay = overlayRef.current;
-
-    // combina coloração + linhas num canvas final
-    const final = document.createElement('canvas');
-    final.width  = canvas.width;
-    final.height = canvas.height;
-    const fctx   = final.getContext('2d');
-    fctx.drawImage(canvas,  0, 0);
-    fctx.drawImage(overlay, 0, 0);
-
-    const dataUrl  = final.toDataURL('image/png');
+    const dataUrl = canvas.toDataURL('image/png');
     const artworks = JSON.parse(localStorage.getItem('edukids_artworks') || '[]');
     artworks.push({
       id:        `${profile?.id}_${drawing?.id}_${Date.now()}`,
@@ -162,7 +212,7 @@ function ColoringPage() {
       profileId: profile?.id,
     });
     localStorage.setItem('edukids_artworks', JSON.stringify(artworks));
-    updateProgress('cores', 3, 1); // conta como progresso de cores
+    updateProgress('cores', 3, 1);
     setSaved(true);
     setShowSave(true);
     speak('Parabéns! Sua obra de arte foi salva!');
@@ -189,15 +239,25 @@ function ColoringPage() {
         </button>
       </header>
 
-      {/* canvas empilhados */}
+      {/* canvas único com tudo integrado */}
       <div className={styles.canvasWrap}>
         <canvas
           ref={canvasRef}
           className={styles.canvas}
-          onMouseDown={startDraw} onMouseMove={draw} onMouseUp={endDraw} onMouseLeave={endDraw}
-          onTouchStart={startDraw} onTouchMove={draw} onTouchEnd={endDraw}
+          onMouseDown={handleStart}
+          onMouseMove={handleMove}
+          onMouseUp={handleEnd}
+          onMouseLeave={handleEnd}
+          onTouchStart={handleStart}
+          onTouchMove={handleMove}
+          onTouchEnd={handleEnd}
         />
-        <canvas ref={overlayRef} className={`${styles.canvas} ${styles.canvasOverlay}`} />
+        {!loaded && (
+          <div className={styles.loadingOverlay}>
+            <span>🎨</span>
+            <p>Carregando desenho...</p>
+          </div>
+        )}
       </div>
 
       {/* paleta */}
@@ -225,13 +285,13 @@ function ColoringPage() {
             </button>
           ))}
         </div>
-        <button className={`${styles.toolBtn} ${isEraser ? styles.toolActive : ''}`}
-          onClick={() => { setIsEraser(e => !e); playClick(); }} title="Borracha">
+        <button
+          className={`${styles.toolBtn} ${isEraser ? styles.toolActive : ''}`}
+          onClick={() => { setIsEraser(e => !e); playClick(); }}
+        >
           🧹
         </button>
-        <button className={styles.toolBtn} onClick={clearCanvas} title="Limpar tudo">
-          🗑️
-        </button>
+        <button className={styles.toolBtn} onClick={clearCanvas}>🗑️</button>
       </div>
 
       {/* cor ativa */}
